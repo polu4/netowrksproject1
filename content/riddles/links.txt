@@ -1,0 +1,2 @@
+0A riddle concerning the world around us  riddle1.txt   localhost   5000
+0A riddle concerning the sensory experience     riddle2.txt   localhost   5000 

@@ -1,0 +1,4 @@
+0About this server  about.txt   localhost   5000
+0A greeting    hello.txt   localhost   5000 
+1Jokes  jokes/  localhost   5000
+1Riddles    riddles/    localhost   5000

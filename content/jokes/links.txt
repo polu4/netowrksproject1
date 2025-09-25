@@ -1,0 +1,2 @@
+0A joke about boomerangs  riddle1.txt   localhost   5000
+0A joke about scientists     riddle2.txt   localhost   5000 

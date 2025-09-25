@@ -24,10 +24,19 @@ class TCPServer:
             # Get the message and echo it back
             while True:
                 data = clientSock.recv(1024)
-                if not len(data):
-                    break
-                print ("Received message:  " + data.decode("ascii"))
-
+                data_text = data.decode("ascii")
+                print(data_text)
+                prefix = "./content/"
+                if data == "" or data == "\n" or "\r\n":
+                    file_name = prefix + "links.txt"
+                    links_file = open(file_name, "rb")
+                    links = links_file.read()
+                    clientSock.sendall(links)
+                    links_file.close()
+                #elif ...
+                #if not len(data):
+                 #   break
+                #print ("Received message:  " + data.decode("ascii"))
                 clientSock.sendall(data)
             clientSock.close()
 
