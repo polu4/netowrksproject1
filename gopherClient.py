@@ -3,6 +3,10 @@ A simple "echo" client written in Python.
 
 author:  Amy Csizmar Dalal and Alden Harcourt, Sam Lengyel Luke Poley
 CS 331, Fall 2025
+
+Minimal Gopher client (RFC-style behaviour for menus and text files).
+It sends messages to and processes replies from a Gopher server following RFC 1436.
+To test, use the default port of the server you're using.
 '''
 import sys, socket
 
