@@ -52,7 +52,7 @@ def main():
         print("Received reply: \n" + replyCleaned)
         savePath = input("Enter the path to where you want to save " + message + " or press enter to save the file in your current directory: ") + message
         with open(savePath, "wb") as downloadedFile:
-            downloadedFile.write(replyCleaned)
+            downloadedFile.write(replyCleaned.encode("ascii"))
         print(message + " downloaded to resource_path")
 
     serverSock.close()
