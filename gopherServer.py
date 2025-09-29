@@ -51,7 +51,7 @@ class TCPServer:
                 try:
                     with open(resource_path, "rb") as f:
                         response = (f.read()).decode("ascii")
-                        response += "\n." # test
+                        response += "\n."
                         response = response.encode("ascii")
                     clientSock.sendall(response)
                 except FileNotFoundError:
