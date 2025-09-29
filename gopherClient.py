@@ -44,7 +44,7 @@ def main():
         # Otherwise tell the user that they just asked for an invalid file or directory.
         else:
             print ("ERROR - " + message + " not a valid file or directory")
-    elif reply[0] == DIRECTORY
+    elif reply[0] == DIRECTORY:
         print ("Received reply: \n"+ reply)
     elif reply[0] == FILE:
         savePath = input("Enter the path to where you want to save " + message + " or press enter to save the file in your current directory") + message
