@@ -52,7 +52,7 @@ def main():
         print ("Received reply: \n" + replyCleaned)
     elif replyType == FILE:
         print("Received reply: \n" + replyCleaned)
-        downloadYN = input("Download" + message  +" Y/N: ").casefold()
+        downloadYN = input("Download " + message  +" Y/N: ").casefold()
         if downloadYN == YES:
             savePath = input("Enter the path to where you want to save " + message + " or press enter to save the file in your current directory: ") + message
             with open(savePath, "wb") as downloadedFile:
