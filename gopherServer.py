@@ -1,7 +1,7 @@
 '''
 A simple TCP "echo" server written in Python.
 
-author:  Amy Csizmar Dalal and [YOUR NAMES HERE]
+author:  Amy Csizmar Dalal and Luke Poley, Sam Lengyel, Alden Harcourt
 CS 331, Fall 2025
 
 Minimal Gopher server (RFC-style behaviour for menus and text files).
