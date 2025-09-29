@@ -21,23 +21,35 @@ class TCPServer:
         while True:
             clientSock, clientAddr = self.sock.accept()
             print ("Connection received from ",  clientSock.getpeername())
-            # Get the message and echo it back
+            # Get the message and respond
             while True:
                 data = clientSock.recv(1024)
-                data_text = data.decode("ascii")
-                print(data_text)
-                prefix = "./content/"
-                if data == "" or data == "\n" or "\r\n":
-                    file_name = prefix + "links.txt"
-                    links_file = open(file_name, "rb")
-                    links = links_file.read()
-                    clientSock.sendall(links)
-                    links_file.close()
-                #elif ...
-                #if not len(data):
-                 #   break
-                #print ("Received message:  " + data.decode("ascii"))
-                clientSock.sendall(data)
+                if not data:
+                    break # client closed connection
+                
+                selector = data.decode("ascii").strip()
+                print(f"Received selector: '{selector}'")
+
+                if selector == "" or selector == "\\r\\n":
+                    resource_path = "content/links.txt"
+                else:
+                    if ".." in selector:
+                        error_msg = b"3Invalid selector.\terror\terror\r\n"
+                        clientSock.sendall(error_msg)
+                        break
+                    resource_path = "content/" + selector
+
+                try:
+                    with open(resource_path, "rb") as f:
+                        response = f.read()
+                    clientSock.sendall(response)
+                except FileNotFoundError:
+                    print(f"File not found: {resource_path}")
+                    error_msg = f"3'{selector}' not found.\terror\terror\r\n".encode("ascii")
+                    clientSock.sendall(error_msg)
+                
+                # We've sent our response, so break this inner loop
+                break
             clientSock.close()
 
 def main():
