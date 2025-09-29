@@ -36,6 +36,8 @@ def main():
     FILE = '0'
     DIRECTORY = '1'
     ERROR = '3'
+    YES = "Y".casefold()
+    NO = "N".casefold()
     reply = returned.decode("ascii")
     replyType = reply[0]
     replyCleaned = reply[1:] # separate Type from Reply
@@ -50,10 +52,12 @@ def main():
         print ("Received reply: \n" + replyCleaned)
     elif replyType == FILE:
         print("Received reply: \n" + replyCleaned)
-        savePath = input("Enter the path to where you want to save " + message + " or press enter to save the file in your current directory: ") + message
-        with open(savePath, "wb") as downloadedFile:
-            downloadedFile.write(replyCleaned.encode("ascii"))
-        print(message + " downloaded to resource_path")
+        downloadYN = input("Download" + message  +" Y/N: ").casefold()
+        if downloadYN == YES:
+            savePath = input("Enter the path to where you want to save " + message + " or press enter to save the file in your current directory: ") + message
+            with open(savePath, "wb") as downloadedFile:
+                downloadedFile.write(replyCleaned.encode("ascii"))
+            print(message + " downloaded to " + savePath)
 
     serverSock.close()
 
