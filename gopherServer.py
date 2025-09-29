@@ -39,7 +39,7 @@ class TCPServer:
 
                 # Determine which resource the client wants based on the selector.
                 try:
-                    if selector == "" or selector == "\\r\\n":
+                    if selector == '':
                         # An empty selector means the client wants the main menu.
                         resource_path = "content/links.txt"
                         with open(resource_path, "rb") as f:
