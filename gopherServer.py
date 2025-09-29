@@ -35,13 +35,12 @@ class TCPServer:
                 if not data:
                     break # client closed connection
                 
-                # Decode the selector string.
                 selector = data.decode("ascii").strip()
                 print(f"Received selector: '{selector}'")
 
-                # Determine which resource the client wants based on the selector.
+                # Determine what client wants
                 if selector == "" or selector == "\\r\\n":
-                    # An empty selector means the client wants the main menu.
+                    # Client wants main menu.
                     resource_path = "content/links.txt"
                     try:
                         with open(resource_path, "rb") as f:
@@ -52,12 +51,12 @@ class TCPServer:
                         error_msg = f"3'links.txt' not found.\terror\terror\r\n".encode("ascii")
                         clientSock.sendall(error_msg)
                 else:
-                    # The first character of the selector determines the resource type.
+                    # Determine resource type.
                     gopher_type = selector[0]
                     # The rest of the selector is the path.
                     path = selector[1:] 
 
-                    # Basic security check to prevent accessing parent directories.
+                    # Security check to prevent accessing parent directories.
                     if ".." in path:
                         error_msg = b"3Invalid selector.\terror\terror\r\n"
                         clientSock.sendall(error_msg)
@@ -67,33 +66,31 @@ class TCPServer:
 
                     try:
                         if gopher_type == '0':
-                            # Type 0 is a file. Send its contents with a termination line.
+                            # Type 0 is a file.
                             with open(resource_path, "rb") as f:
                                 response = (f.read()).decode("ascii")
                                 response += "\n."
                                 response = response.encode("ascii")
                             clientSock.sendall(response)
                         elif gopher_type == '1':
-                            # Type 1 is a directory. Send its links.txt file.
+                            # Type 1 is a directory.
                             menu_path = os.path.join(resource_path, "links.txt")
                             with open(menu_path, "rb") as f:
                                 response = f.read()
                             clientSock.sendall(response)
                         else:
-                            # Handle unknown Gopher types by treating them as not found.
+                            # Handle unknown types by treating them as not found.
                             raise FileNotFoundError
 
                     except FileNotFoundError:
-                        # If the file or directory doesn't exist, send a Gopher error message.
                         print(f"Resource not found: {resource_path}")
                         error_msg = f"3'{selector}' not found.\terror\terror\r\n".encode("ascii")
                         clientSock.sendall(error_msg)
                 
-                # We've sent our response, so break this inner loop.
                 break
             clientSock.close()
 
-# Sets up and starts the server based on command-line arguments.
+# Sets up and starts the server.
 def main():
     if len(sys.argv) > 1:
         try:
